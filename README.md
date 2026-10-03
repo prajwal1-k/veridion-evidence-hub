@@ -27,3 +27,10 @@ npm run dev
 - TypeScript
 - React
 - Tailwind CSS
+
+## Veridion AI — local setup
+```
+bun install
+bun run dev   # http://localhost:8080
+```
+All data is mock data served from `src/services` with simulated latency.
