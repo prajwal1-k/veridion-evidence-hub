@@ -141,5 +141,5 @@ export const IndicatorBadge = ({ level }: { level: IndicatorLevel }) => <Pill to
 
 const priorityMap: Record<Priority, Tone> = { low: "neutral", medium: "info", high: "warning", critical: "danger" };
 export const PriorityBadge = ({ priority }: { priority: Priority }) => (
-  <Pill tone={priorityMap[priority]}>{priority[0].toUpperCase() + priority.slice(1)}</Pill>
+  <Pill tone={priorityMap[priority]}>{priority.charAt(0).toUpperCase() + priority.slice(1)}</Pill>
 );
