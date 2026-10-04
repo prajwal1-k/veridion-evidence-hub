@@ -1,9 +1,11 @@
 import type {
+  ActivityPoint,
   AnalysisReport,
   AuditEvent,
   EvidenceItem,
   Investigation,
   Notification,
+  ProcessingJob,
   TeamMember,
 } from "@/types";
 
@@ -55,12 +57,18 @@ export const notifications: Notification[] = [
   { id: "n3", title: "Processing failed for EV-00941", time: "Yesterday", read: true },
 ];
 
-export const activitySeries = [
-  { day: "Mon", analyses: 12 },
-  { day: "Tue", analyses: 18 },
-  { day: "Wed", analyses: 9 },
-  { day: "Thu", analyses: 21 },
-  { day: "Fri", analyses: 16 },
-  { day: "Sat", analyses: 4 },
-  { day: "Sun", analyses: 6 },
+// 90 days of deterministic demo activity ending 2026-10-04.
+export const activitySeries: ActivityPoint[] = Array.from({ length: 90 }, (_, i) => {
+  const d = new Date(Date.UTC(2026, 9, 4) - (89 - i) * 86_400_000);
+  const weekday = d.getUTCDay();
+  const base = weekday === 0 || weekday === 6 ? 4 : 12;
+  return { date: d.toISOString().slice(0, 10), analyses: base + ((i * 7 + 3) % 11) };
+});
+
+export const jobs: ProcessingJob[] = [
+  { id: "JOB-5521", evidenceId: "EV-00980", fileName: "claim_photo_front.jpeg", caseRef: "VR-2026-0139", state: "processing", progress: 62, submittedAt: "2026-10-04T04:31:00Z" },
+  { id: "JOB-5520", evidenceId: "EV-00977", fileName: "claim_photo_side.png", caseRef: "VR-2026-0139", state: "pending", progress: 0, submittedAt: "2026-10-04T04:30:00Z" },
+  { id: "JOB-5518", evidenceId: "EV-00962", fileName: "certificate_original.tiff", caseRef: "VR-2026-0131", state: "pending", progress: 0, submittedAt: "2026-10-03T17:02:00Z" },
+  { id: "JOB-5512", evidenceId: "EV-00981", fileName: "invoice_4471_scan.pdf", caseRef: "VR-2026-0142", state: "completed", progress: 100, submittedAt: "2026-10-02T13:59:00Z" },
+  { id: "JOB-5497", evidenceId: "EV-00941", fileName: "amendment_v2_signed.pdf", caseRef: "VR-2026-0127", state: "failed", progress: 38, submittedAt: "2026-09-25T15:12:00Z" },
 ];

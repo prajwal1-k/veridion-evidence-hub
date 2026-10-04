@@ -58,3 +58,27 @@ export interface Notification {
   time: string;
   read: boolean;
 }
+
+export type JobState = "pending" | "processing" | "completed" | "failed";
+
+export interface ProcessingJob {
+  id: string;
+  evidenceId: string;
+  fileName: string;
+  caseRef: string;
+  state: JobState;
+  progress: number;
+  submittedAt: string;
+}
+
+export interface ActivityPoint {
+  date: string; // ISO yyyy-mm-dd
+  analyses: number;
+}
+
+export interface NewInvestigationInput {
+  title: string;
+  caseRef: string;
+  owner: string;
+  priority: Priority;
+}
