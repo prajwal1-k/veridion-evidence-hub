@@ -67,7 +67,7 @@ export function NewInvestigationDialog({ trigger }: { trigger?: ReactNode }) {
                 <SelectTrigger id="ni-priority"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   {(["low", "medium", "high", "critical"] as const).map((p) => (
-                    <SelectItem key={p} value={p}>{p[0].toUpperCase() + p.slice(1)}</SelectItem>
+                    <SelectItem key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
