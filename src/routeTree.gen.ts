@@ -13,10 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalysisRouteImport } from './routes/analysis'
 import { Route as AuditRouteImport } from './routes/audit'
 import { Route as EvidenceRouteImport } from './routes/evidence'
-import { Route as InvestigationsRouteImport } from './routes/investigations'
 import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as TeamRouteImport } from './routes/team'
+import { Route as InvestigationsIndexRouteImport } from './routes/investigations.index'
+import { Route as InvestigationsIdRouteImport } from './routes/investigations.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -38,11 +39,6 @@ const EvidenceRoute = EvidenceRouteImport.update({
   path: '/evidence',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InvestigationsRoute = InvestigationsRouteImport.update({
-  id: '/investigations',
-  path: '/investigations',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ReportsRoute = ReportsRouteImport.update({
   id: '/reports',
   path: '/reports',
@@ -58,26 +54,38 @@ const TeamRoute = TeamRouteImport.update({
   path: '/team',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InvestigationsIndexRoute = InvestigationsIndexRouteImport.update({
+  id: '/investigations/',
+  path: '/investigations/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvestigationsIdRoute = InvestigationsIdRouteImport.update({
+  id: '/investigations/$id',
+  path: '/investigations/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
   '/audit': typeof AuditRoute
   '/evidence': typeof EvidenceRoute
-  '/investigations': typeof InvestigationsRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
+  '/investigations/$id': typeof InvestigationsIdRoute
+  '/investigations/': typeof InvestigationsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
   '/audit': typeof AuditRoute
   '/evidence': typeof EvidenceRoute
-  '/investigations': typeof InvestigationsRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
+  '/investigations/$id': typeof InvestigationsIdRoute
+  '/investigations': typeof InvestigationsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -85,10 +93,11 @@ export interface FileRoutesById {
   '/analysis': typeof AnalysisRoute
   '/audit': typeof AuditRoute
   '/evidence': typeof EvidenceRoute
-  '/investigations': typeof InvestigationsRoute
   '/reports': typeof ReportsRoute
   '/settings': typeof SettingsRoute
   '/team': typeof TeamRoute
+  '/investigations/$id': typeof InvestigationsIdRoute
+  '/investigations/': typeof InvestigationsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -97,30 +106,33 @@ export interface FileRouteTypes {
     | '/analysis'
     | '/audit'
     | '/evidence'
-    | '/investigations'
     | '/reports'
     | '/settings'
     | '/team'
+    | '/investigations/$id'
+    | '/investigations/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/analysis'
     | '/audit'
     | '/evidence'
-    | '/investigations'
     | '/reports'
     | '/settings'
     | '/team'
+    | '/investigations/$id'
+    | '/investigations'
   id:
     | '__root__'
     | '/'
     | '/analysis'
     | '/audit'
     | '/evidence'
-    | '/investigations'
     | '/reports'
     | '/settings'
     | '/team'
+    | '/investigations/$id'
+    | '/investigations/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -128,10 +140,11 @@ export interface RootRouteChildren {
   AnalysisRoute: typeof AnalysisRoute
   AuditRoute: typeof AuditRoute
   EvidenceRoute: typeof EvidenceRoute
-  InvestigationsRoute: typeof InvestigationsRoute
   ReportsRoute: typeof ReportsRoute
   SettingsRoute: typeof SettingsRoute
   TeamRoute: typeof TeamRoute
+  InvestigationsIdRoute: typeof InvestigationsIdRoute
+  InvestigationsIndexRoute: typeof InvestigationsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -164,13 +177,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EvidenceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/investigations': {
-      id: '/investigations'
-      path: '/investigations'
-      fullPath: '/investigations'
-      preLoaderRoute: typeof InvestigationsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/reports': {
       id: '/reports'
       path: '/reports'
@@ -192,6 +198,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TeamRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/investigations/': {
+      id: '/investigations/'
+      path: '/investigations'
+      fullPath: '/investigations/'
+      preLoaderRoute: typeof InvestigationsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/investigations/$id': {
+      id: '/investigations/$id'
+      path: '/investigations/$id'
+      fullPath: '/investigations/$id'
+      preLoaderRoute: typeof InvestigationsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -200,10 +220,11 @@ const rootRouteChildren: RootRouteChildren = {
   AnalysisRoute: AnalysisRoute,
   AuditRoute: AuditRoute,
   EvidenceRoute: EvidenceRoute,
-  InvestigationsRoute: InvestigationsRoute,
   ReportsRoute: ReportsRoute,
   SettingsRoute: SettingsRoute,
   TeamRoute: TeamRoute,
+  InvestigationsIdRoute: InvestigationsIdRoute,
+  InvestigationsIndexRoute: InvestigationsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
